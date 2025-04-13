@@ -10,6 +10,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/videos")
 public class VideoController {
+
     @Autowired
     private VideoRepository videoRepository;
 
@@ -23,8 +24,18 @@ public class VideoController {
         return videoRepository.save(video);
     }
 
-    @PostMapping("/saveStatus")
-    public VideoModel saveStatusVideo(@RequestBody VideoModel video) {
+    @PutMapping("/saveStatus/{id}")
+    public VideoModel saveStatusVideo(@PathVariable Long id, @RequestBody String status) {
+        VideoModel video = videoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Vídeo não encontrado"));
+
+        video.setStatus(status);
+
         return videoRepository.save(video);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public void deleteVideo(@PathVariable Long id) {
+        videoRepository.deleteById(id);
     }
 }
