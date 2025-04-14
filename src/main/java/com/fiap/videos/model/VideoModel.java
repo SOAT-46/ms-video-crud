@@ -17,9 +17,8 @@ import lombok.Setter;
 public class VideoModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long userId;
     private Long id;
     private String title;
-    private String url;
-    private Long userId;
     private String status;
 }
