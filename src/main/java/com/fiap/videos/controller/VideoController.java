@@ -1,8 +1,6 @@
 package com.fiap.videos.controller;
 
-import com.fiap.videos.VideoNotFoundException;
 import com.fiap.videos.model.VideoModel;
-import com.fiap.videos.repository.VideoRepository;
 import com.fiap.videos.services.VideoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
