@@ -1,40 +1,70 @@
 package com.fiap.videos.controller;
 
 import com.fiap.videos.model.VideoModel;
+import com.fiap.videos.services.VideoService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.*;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-public class VideoControllerTest {
+import java.util.Arrays;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
+@ExtendWith(MockitoExtension.class)
+class VideoControllerTest {
+
+    @InjectMocks
     private VideoController controller;
-    private VideoModel video;
+
+    @Mock
+    private VideoService service;
+
+    private VideoModel mockVideo;
 
     @BeforeEach
-    public void setUp() {
-        controller = new VideoController();
+    void setUp() {
+        mockVideo = new VideoModel();
+        mockVideo.setId(1L);
+        mockVideo.setUserId(100L);
+        mockVideo.setStatus("PENDING");
     }
 
     @Test
-    public void testGetVideosByUserId() {
-        controller.getVideosByUserId(1L);
+    void testGetVideosByUserId() {
+        when(service.findByUserId(100L)).thenReturn(Arrays.asList(mockVideo));
+
+        List<VideoModel> result = controller.getVideosByUserId(100L);
+
+        assertEquals(1, result.size());
+        assertEquals(mockVideo, result.get(0));
     }
 
     @Test
-    public void testSaveVideo() {
-        video.setUserId(1L);
-        video.setId(1L);
-        video.setTitle("Gato ronronando");
-        video.setStatus("Em processamento");
+    void testSaveVideo() {
+        when(service.create(mockVideo)).thenReturn(mockVideo);
 
-        controller.saveVideo(video);
+        VideoModel result = controller.saveVideo(mockVideo);
+
+        assertNotNull(result);
+        assertEquals(mockVideo, result);
     }
 
     @Test
-    public void testSaveStatusVideo() {
-        controller.saveStatusVideo(1L, "Processado");
+    void testSaveStatusVideo() {
+        when(service.updateStatus(1L, "\"COMPLETED\"")).thenReturn(mockVideo);
+
+        VideoModel result = controller.saveStatusVideo(1L, "\"COMPLETED\"");
+
+        assertEquals(mockVideo, result);
     }
 
     @Test
-    public void  testDeleteVideo() {
+    void testDeleteVideo() {
         controller.deleteVideo(1L);
+        verify(service).delete(1L);
     }
 }
