@@ -1,5 +1,6 @@
 package com.fiap.videos.controller;
 
+import com.fiap.videos.controller.requests.CreateVideoRequest;
 import com.fiap.videos.model.VideoModel;
 import com.fiap.videos.services.VideoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +20,9 @@ public class VideoController {
         return service.findByUserId(userId);
     }
 
-    @PostMapping("/save")
-    public VideoModel saveVideo(@RequestBody VideoModel video) {
-        return service.create(video);
+    @PostMapping
+    public VideoModel saveVideo(@RequestBody CreateVideoRequest video) {
+        return service.create(video.toDomain());
     }
 
     @PutMapping("/saveStatus/{id}")
