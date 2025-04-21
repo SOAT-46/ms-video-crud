@@ -1,6 +1,5 @@
 package com.fiap.videos.controller;
 
-import com.fiap.videos.controller.requests.CreateVideoRequest;
 import com.fiap.videos.model.VideoModel;
 import com.fiap.videos.services.VideoService;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,8 +25,6 @@ class VideoControllerTest {
 
     private VideoModel mockVideo;
 
-    private CreateVideoRequest request;
-
     @BeforeEach
     void setUp() {
         mockVideo = VideoModel.builder()
@@ -36,7 +33,6 @@ class VideoControllerTest {
                 .title("title")
                 .status("PENDING")
                 .build();
-        request = new CreateVideoRequest(1L, "title");
     }
 
     @Test
@@ -50,10 +46,10 @@ class VideoControllerTest {
     }
 
     @Test
-    void testSaveVideo() {
-        when(service.create(mockVideo)).thenReturn(mockVideo);
+    void testSave() {
+        when(service.create(1L, null)).thenReturn(mockVideo);
 
-        VideoModel result = controller.saveVideo(request);
+        VideoModel result = controller.save(1L, null);
 
         assertNotNull(result);
         assertEquals(mockVideo, result);

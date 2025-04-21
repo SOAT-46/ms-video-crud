@@ -49,7 +49,7 @@ class VideoServiceTest {
     void testCreateVideo() {
         when(videoRepository.save(mockVideo)).thenReturn(mockVideo);
 
-        var result = service.create(mockVideo);
+        var result = service.create(1L, null);
 
         assertNotNull(result);
         assertEquals(mockVideo, result);
