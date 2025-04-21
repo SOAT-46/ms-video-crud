@@ -25,6 +25,20 @@ services:
     networks:
       - soatnet
 
+  localstack:
+    image: localstack/localstack:latest
+    container_name: localstack
+    ports:
+      - "4566:4566" # Porta principal de todos os serviços
+    environment:
+      - SERVICES=s3,dynamodb
+      - DEBUG=1
+      - DOCKER_HOST=unix:///var/run/docker.sock
+    networks:
+      - soatnet
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
   ms-video:
     container_name: ms-video
     build:
@@ -37,6 +51,7 @@ services:
     depends_on:
       - rabbitmq
       - postgres
+      - localstack
     networks:
       - soatnet
 

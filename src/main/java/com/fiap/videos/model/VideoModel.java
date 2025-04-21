@@ -20,4 +20,5 @@ public class VideoModel implements Serializable {
     private Long userId;
     private String title;
     private String status;
+    private String videoKey;
 }

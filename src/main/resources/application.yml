@@ -1,6 +1,11 @@
 spring:
   application:
     name: ms-video
+  servlet:
+    multipart:
+      max-file-size: 800MB
+      max-request-size: 800MB
+      enabled: true
   rabbitmq:
     host: localhost
     port: 5672
@@ -24,3 +29,12 @@ spring:
     properties:
       hibernate:
         format_sql: true
+
+aws:
+  region: ${AWS_REGION:us-east-1}
+  credentials:
+    access-key: ${AWS_ACCESS_KEY:test_access_key}
+    secret-key: ${AWS_SECRET_KEY:test_secret_access_key}
+  s3:
+    bucket-name: videos-sent
+    endpoint: ${AWS_ENDPOINT:https://s3.localhost.localstack.cloud:4566}
