@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface VideoRepository extends JpaRepository<VideoModel, Long> {
-    List<VideoModel> findByUserId(Long userId);
+    List<VideoModel> findByUserName(String userName);
 }

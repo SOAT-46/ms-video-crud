@@ -29,17 +29,17 @@ class VideoControllerTest {
     void setUp() {
         mockVideo = VideoModel.builder()
                 .id(1L)
-                .userId(100L)
+                .userName("joao_joao")
                 .title("title")
                 .status("PENDING")
                 .build();
     }
 
     @Test
-    void testGetVideosByUserId() {
-        when(service.findByUserId(100L)).thenReturn(Arrays.asList(mockVideo));
+    void testGetVideosByUserName() {
+        when(service.findByUserName("joao_joao")).thenReturn(Arrays.asList(mockVideo));
 
-        List<VideoModel> result = controller.getVideosByUserId(100L);
+        List<VideoModel> result = controller.getVideosByUserName("joao_joao");
 
         assertEquals(1, result.size());
         assertEquals(mockVideo, result.get(0));
@@ -47,9 +47,9 @@ class VideoControllerTest {
 
     @Test
     void testSave() {
-        when(service.create(1L, null)).thenReturn(mockVideo);
+        when(service.create("joao_joao", null)).thenReturn(mockVideo);
 
-        VideoModel result = controller.save(1L, null);
+        VideoModel result = controller.save("joao_joao", null);
 
         assertNotNull(result);
         assertEquals(mockVideo, result);

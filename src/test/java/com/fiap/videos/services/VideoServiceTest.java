@@ -31,15 +31,15 @@ class VideoServiceTest {
     void setUp() {
         mockVideo = new VideoModel();
         mockVideo.setId(1L);
-        mockVideo.setUserId(100L);
+        mockVideo.setUserName("joao_joao");
         mockVideo.setStatus("PENDING");
     }
 
     @Test
-    void testFindByUserId() {
-        when(videoRepository.findByUserId(100L)).thenReturn(Arrays.asList(mockVideo));
+    void testFindByUserName() {
+        when(videoRepository.findByUserName("joao_joao")).thenReturn(Arrays.asList(mockVideo));
 
-        var result = service.findByUserId(100L);
+        var result = service.findByUserName("joao_joao");
 
         assertEquals(1, result.size());
         assertEquals(mockVideo, result.get(0));
@@ -49,7 +49,7 @@ class VideoServiceTest {
     void testCreateVideo() {
         when(videoRepository.save(mockVideo)).thenReturn(mockVideo);
 
-        var result = service.create(1L, null);
+        var result = service.create("joao_joao", null);
 
         assertNotNull(result);
         assertEquals(mockVideo, result);
