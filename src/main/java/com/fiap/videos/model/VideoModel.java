@@ -17,7 +17,7 @@ public class VideoModel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long userId;
+    private String userName;
     private String title;
     private String status;
     private String videoKey;

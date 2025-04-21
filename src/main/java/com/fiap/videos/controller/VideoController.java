@@ -1,6 +1,5 @@
 package com.fiap.videos.controller;
 
-import com.fiap.videos.controller.requests.CreateVideoRequest;
 import com.fiap.videos.model.VideoModel;
 import com.fiap.videos.services.VideoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,19 +16,19 @@ public class VideoController {
     @Autowired
     private VideoService service;
 
-    @GetMapping("/{userId}")
-    public List<VideoModel> getVideosByUserId(@PathVariable Long userId) {
-        return service.findByUserId(userId);
+    @GetMapping("/{userName}")
+    public List<VideoModel> getVideosByUserName(@PathVariable String userName) {
+        return service.findByUserName(userName);
     }
 
     @PostMapping(
-            path = "{userId}",
+            path = "{userName}",
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public VideoModel save(
-            @PathVariable("userId") final Long userId,
+            @PathVariable("userName") final String userName,
             @RequestParam(value = "file") final MultipartFile file) {
-        return service.create(userId, file);
+        return service.create(userName, file);
     }
 
     @PutMapping("/saveStatus/{id}")

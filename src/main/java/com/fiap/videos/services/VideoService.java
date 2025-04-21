@@ -26,16 +26,16 @@ public class VideoService {
         this.storageService = storageService;
     }
 
-    public List<VideoModel> findByUserId(Long userId) {
-        return videoRepository.findByUserId(userId);
+    public List<VideoModel> findByUserName(String userName) {
+        return videoRepository.findByUserName(userName);
     }
 
     @SneakyThrows
-    public VideoModel create(final Long userId, final MultipartFile file) {
+    public VideoModel create(final String userName, final MultipartFile file) {
         final var key = this.storageService.upload(file);
         final var video = VideoModel
                 .builder()
-                .userId(userId)
+                .userName(userName)
                 .videoKey(key)
                 .title(file.getOriginalFilename())
                 .status("IN_PROCESS")
