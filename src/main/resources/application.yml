@@ -38,3 +38,11 @@ aws:
   s3:
     bucket-name: videos-sent
     endpoint: ${AWS_ENDPOINT:https://s3.localhost.localstack.cloud:4566}
+
+rabbitmq:
+  send:
+    queue:
+      name: ${RABBITMQ_SEND_QUEUE:process-video}
+  update:
+    queue:
+      name: ${RABBITMQ_UPDATE_QUEUE:update-video-status}
