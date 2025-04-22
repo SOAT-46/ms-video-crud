@@ -7,8 +7,8 @@ spring:
       max-request-size: 800MB
       enabled: true
   rabbitmq:
-    host: localhost
-    port: 5672
+    host: ${RABBITMQ_HOST:localhost}
+    port: ${RABBITMQ_PORT:5672}
     listener:
       simple:
         retry:
