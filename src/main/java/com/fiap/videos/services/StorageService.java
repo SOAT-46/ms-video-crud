@@ -1,5 +1,6 @@
 package com.fiap.videos.services;
 
+import com.fiap.videos.services.interfaces.Storage;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -13,7 +14,7 @@ import java.util.UUID;
 import static java.lang.String.format;
 
 @Service
-public class StorageService {
+public class StorageService implements Storage {
 
     @Value("${aws.s3.bucket-name}")
     private String bucket;

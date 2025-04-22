@@ -1,6 +1,7 @@
 package com.fiap.videos.producer;
 
 import com.fiap.videos.model.VideoModel;
+import com.fiap.videos.producer.interfaces.Sender;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-public class MessageSender {
+public class MessageSender implements Sender {
 
     private final RabbitTemplate template;
     private final Queue queue;
@@ -20,7 +21,7 @@ public class MessageSender {
         this.queue = queue;
     }
 
-    public void Send(VideoModel video) {
+    public void send(final VideoModel video) {
         try {
             this.template.convertAndSend(queue.getName(), video);
             log.info("✅ Dado enviado para a fila com sucesso");

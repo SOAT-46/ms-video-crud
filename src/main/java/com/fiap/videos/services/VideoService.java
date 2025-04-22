@@ -2,8 +2,10 @@ package com.fiap.videos.services;
 
 import com.fiap.videos.VideoNotFoundException;
 import com.fiap.videos.model.VideoModel;
-import com.fiap.videos.producer.MessageSender;
+import com.fiap.videos.producer.interfaces.Sender;
+import com.fiap.videos.services.interfaces.Storage;
 import com.fiap.videos.repository.VideoRepository;
+import com.fiap.videos.services.interfaces.Video;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -11,22 +13,22 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 @Service
-public class VideoService {
+public class VideoService implements Video {
 
     private final VideoRepository videoRepository;
-    private final MessageSender messageSender;
-    private final StorageService storageService;
+    private final Sender messageSender;
+    private final Storage storageService;
 
     public VideoService(
             final VideoRepository videoRepository,
-            final MessageSender messageSender,
-            final StorageService storageService) {
+            final Sender messageSender,
+            final Storage storageService) {
         this.videoRepository = videoRepository;
         this.messageSender = messageSender;
         this.storageService = storageService;
     }
 
-    public List<VideoModel> findByUserName(String userName) {
+    public List<VideoModel> findByUserName(final String userName) {
         return videoRepository.findByUserName(userName);
     }
 
@@ -42,11 +44,11 @@ public class VideoService {
                 .build();
 
         final var newEntity = videoRepository.save(video);
-        this.messageSender.Send(newEntity);
+        this.messageSender.send(newEntity);
         return newEntity;
     }
 
-    public VideoModel updateStatus(Long id, String status) {
+    public VideoModel updateStatus(final Long id, final String status) {
         VideoModel video = videoRepository.findById(id)
                 .orElseThrow(() -> new VideoNotFoundException(id));
 
@@ -54,7 +56,7 @@ public class VideoService {
         return videoRepository.save(video);
     }
 
-    public void delete(Long id) {
+    public void delete(final Long id) {
         videoRepository.deleteById(id);
     }
 }
