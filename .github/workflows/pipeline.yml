@@ -61,10 +61,14 @@ jobs:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
+
+      - name: Run tests
+        run: mvn clean verify
+
       - name: Build and analyze
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=SOAT-46_ms-video-crud
+        run: mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
 
   docker_build-and-push:
     name: 'docker > build and push'

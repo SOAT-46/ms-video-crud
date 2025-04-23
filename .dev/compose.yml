@@ -31,7 +31,7 @@ services:
     ports:
       - "4566:4566" # Porta principal de todos os serviços
     environment:
-      - SERVICES=s3,dynamodb
+      - SERVICES=s3,dynamodb,sqs
       - DEBUG=1
       - DOCKER_HOST=unix:///var/run/docker.sock
     networks:
